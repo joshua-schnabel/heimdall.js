@@ -1,4 +1,4 @@
-import { configure } from "log4js";
+import { configure, getLogger } from "log4js";
 
 function configLogger() {
     configure({
@@ -9,11 +9,13 @@ function configLogger() {
         },
         categories: {
             default: { appenders: ["stdout"], level: "info" },
+            stdout: { appenders: ["stdout"], level: "info" },
             debug: { appenders: ["stdout"], level: "debug" },
             http: { appenders: ["stdout"], level: "error" },
             security: { appenders: ["err"], level: "error" } 
         }
     });
+
 };
 
 export default configLogger;
