@@ -2,6 +2,7 @@ import { cleanEnv, CleanEnv, str, port } from "envalid";
 import { safeLoad } from "js-yaml";
 import * as fs from 'fs';
 import * as path from 'path';
+import * as _ from "lodash";
 
 export class Config {
   private static instance: Config;
@@ -14,25 +15,22 @@ export class Config {
     this.loadEnviroment();
     this.loadYAML();
   }
-  
+
   private loadYAML() {
-    const configFilePath = this.p_env.H_CONFIGDIR + this.p_env.H_CONFIGFILE;
+    const configFilePath = path.resolve(this.p_env.H_CONFIGDIR + this.p_env.H_CONFIGFILE);
     const defaultConfigFilePath = path.resolve(__dirname, "config.defaul.yml");
 
-    this.p_defaultConfig = safeLoad(fs.readFileSync(path.resolve(defaultConfigFilePath), 'utf8'), {filename: configFilePath, json: true})
-    if(fs.existsSync(configFilePath)) {
-      this.p_config = safeLoad(fs.readFileSync(path.resolve(configFilePath), 'utf8'), {filename: configFilePath, json: true})
+    this.p_defaultConfig = safeLoad(fs.readFileSync(path.resolve(defaultConfigFilePath), 'utf8'), { filename: configFilePath, json: true })
+    if (fs.existsSync(configFilePath)) {
+      this.p_config = safeLoad(fs.readFileSync(path.resolve(configFilePath), 'utf8'), { filename: configFilePath, json: true })
     }
-
-    console.log(this.p_config);
-    console.log(this.p_defaultConfig);
   }
 
   private loadEnviroment() {
     this.p_env = cleanEnv(process.env, {
       "server.port": port({ default: undefined }),
-      H_CONFIGDIR: str({ default: './config/'}),
-      H_CONFIGFILE: str({ default: 'config.yml', devDefault: 'config.dev.yml'})
+      H_CONFIGDIR: str({ default: './config/' }),
+      H_CONFIGFILE: str({ default: 'config.yml', devDefault: 'config.dev.yml' })
     });
   }
 
@@ -41,27 +39,31 @@ export class Config {
   }
 
   private getConfigConfig(key: string[]): any {
-    return this.findRecursiv(this.p_config, key);
+    return this.findRecursiv(this.p_config, _.cloneDeep(key));
   }
-  
+
   private getDefaultConfig(key: string[]): any {
-    return this.findRecursiv(this.p_defaultConfig, key);
+    return this.findRecursiv(this.p_defaultConfig, _.cloneDeep(key));
   }
 
   private findRecursiv(p_config: any, key: string[]): any {
     const ckey = key.shift();
-    if(key.length > 1) {
-      return this.findRecursiv(p_config[ckey], key)
+    if (p_config.hasOwnProperty(ckey)) {
+      if (key.length > 0) {
+        return this.findRecursiv(p_config[ckey], key)
+      } else {
+        return p_config[ckey]
+      }
     } else {
-      return p_config[ckey]
+      return undefined;
     }
   }
 
   public getConfig(...key: string[]): any {
     let value = undefined;
-    if(value == undefined) value = this.getEnvConfig(key);
-    if(value == undefined) value = this.getConfigConfig(key);
-    if(value == undefined) value = this.getDefaultConfig(key);
+    if (value == undefined) value = this.getEnvConfig(key);
+    if (value == undefined) value = this.getConfigConfig(key);
+    if (value == undefined) value = this.getDefaultConfig(key);
     return value;
   }
 
