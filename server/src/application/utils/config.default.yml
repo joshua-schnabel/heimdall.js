@@ -10,11 +10,11 @@ log4js:
     default:
       appenders:
       - stdout
-      level: debug
+      level: info
     stdout:
       appenders:
       - stdout
-      level: debug
+      level: info
     debug:
       appenders:
       - stdout
@@ -22,8 +22,8 @@ log4js:
     http:
       appenders:
       - stdout
-      level: info
+      level: error
     security:
       appenders:
       - err
-      level: info
+      level: error

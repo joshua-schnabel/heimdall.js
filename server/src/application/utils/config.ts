@@ -18,7 +18,7 @@ export class Config {
 
   private loadYAML() {
     const configFilePath = path.resolve(this.p_env.H_CONFIGDIR + this.p_env.H_CONFIGFILE);
-    const defaultConfigFilePath = path.resolve(__dirname, "config.defaul.yml");
+    const defaultConfigFilePath = path.resolve(__dirname, "config.default.yml");
 
     this.p_defaultConfig = safeLoad(fs.readFileSync(path.resolve(defaultConfigFilePath), 'utf8'), { filename: configFilePath, json: true })
     if (fs.existsSync(configFilePath)) {
@@ -39,11 +39,11 @@ export class Config {
   }
 
   private getConfigConfig(key: string[]): any {
-    return this.findRecursiv(this.p_config, _.cloneDeep(key));
+    return (this.p_config !== null) ? this.findRecursiv(this.p_config, _.cloneDeep(key)) : undefined;
   }
 
   private getDefaultConfig(key: string[]): any {
-    return this.findRecursiv(this.p_defaultConfig, _.cloneDeep(key));
+    return (this.p_defaultConfig !== null) ? this.findRecursiv(this.p_defaultConfig, _.cloneDeep(key)) : undefined;
   }
 
   private findRecursiv(p_config: any, key: string[]): any {
@@ -59,12 +59,19 @@ export class Config {
     }
   }
 
-  public getConfig(...key: string[]): any {
+  public getValue(...key: string[]): any {
+    key = this.getKey(key);
     let value = undefined;
     if (value == undefined) value = this.getEnvConfig(key);
     if (value == undefined) value = this.getConfigConfig(key);
     if (value == undefined) value = this.getDefaultConfig(key);
     return value;
+  }
+
+  private getKey(key: string[]): string[] {
+    if(key.length == 1 && key[0].includes("."))
+      return key[0].split(".");
+    return key;
   }
 
   public env(): CleanEnv {
@@ -78,3 +85,6 @@ export class Config {
     return Config.instance;
   }
 }
+
+export const CONF = Config.getInstance();
+export default Config.getInstance();
