@@ -1,24 +1,33 @@
-import * as clc from 'cli-color'
+import * as clc from "cli-color";
 
-function print_banner() {
-    var c1 = clc.xterm(196);
-    var c2 = clc.xterm(202);
-    var c3 = clc.xterm(226);
-    var c4 = clc.xterm(83);
-    var c5 = clc.xterm(38);
-    var c6 = clc.xterm(27);
-    var c7 = clc.xterm(129);
-    var c8 = clc.xterm(201);
-    var cV = clc.xterm(43);
-    console.log(c1(" _   _        _                 _         _  _       _      "));
-    console.log(c2("| | | |      (_)               | |       | || |     (_)     "));
-    console.log(c3("| |_| |  ___  _  _ __ ___    __| |  __ _ | || |      _  ___ "));
-    console.log(c4("|  _  | / _ \\| || '_ ` _ \\  / _` | / _` || || |     | |/ __|"));
-    console.log(c5("| | | ||  __/| || | | | | || (_| || (_| || || | _   | |\\__ \\"));
-    console.log(c6("\\_| |_/ \\___||_||_| |_| |_| \\__,_| \\__,_||_||_|(_)  | ||___/"));
-    console.log(c7("                                                   _/ |     "));
-    console.log(cV("     Server 1.0.0") + c8("                                 |__/      "));
-    console.log("");
-};
+const red = 196;
+const orange = 202;
+const yellow = 226;
+const green = 83;
+const aqua = 38;
+const blue = 27;
+const pink = 129;
+const purple = 201;
+
+function print_banner (): void {
+  const c1 = clc.xterm(red);
+  const c2 = clc.xterm(orange);
+  const c3 = clc.xterm(yellow);
+  const c4 = clc.xterm(green);
+  const c5 = clc.xterm(aqua);
+  const c6 = clc.xterm(blue);
+  const c7 = clc.xterm(pink);
+  const c8 = clc.xterm(purple);
+  const cV = clc.xterm(aqua);
+  console.log(c1(" _   _        _                 _         _  _       _      "));
+  console.log(c2("| | | |      (_)               | |       | || |     (_)     "));
+  console.log(c3("| |_| |  ___  _  _ __ ___    __| |  __ _ | || |      _  ___ "));
+  console.log(c4("|  _  | / _ \\| || '_ ` _ \\  / _` | / _` || || |     | |/ __|"));
+  console.log(c5("| | | ||  __/| || | | | | || (_| || (_| || || | _   | |\\__ \\"));
+  console.log(c6("\\_| |_/ \\___||_||_| |_| |_| \\__,_| \\__,_||_||_|(_)  | ||___/"));
+  console.log(c7("                                                   _/ |     "));
+  console.log(cV("     Server 1.0.0") + c8("                                 |__/      "));
+  console.log("");
+}
 
 export default print_banner;

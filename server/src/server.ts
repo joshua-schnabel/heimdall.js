@@ -1,4 +1,4 @@
-import App from './application/app'
+import App from "./application/app";
 
-const app = new App();
+const app = new App([]);
 app.listen();
