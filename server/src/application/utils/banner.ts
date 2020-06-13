@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import * as clc from "cli-color";
 
 const red = 196;
@@ -9,7 +10,7 @@ const blue = 27;
 const pink = 129;
 const purple = 201;
 
-function print_banner (): void {
+function printBanner (): void {
   const c1 = clc.xterm(red);
   const c2 = clc.xterm(orange);
   const c3 = clc.xterm(yellow);
@@ -30,4 +31,4 @@ function print_banner (): void {
   console.log("");
 }
 
-export default print_banner;
+export default printBanner;

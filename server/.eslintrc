@@ -14,9 +14,13 @@
     ],
     "extends": [
         "eslint:recommended",
+        "standard",
         "plugin:@typescript-eslint/eslint-recommended"
     ],
     "rules": {
+        "no-console": [
+            "error"
+        ],
         "semi": [
             "error",
             "always"
@@ -36,6 +40,36 @@
                 "maxEOF": 1
             }
         ],
+        "spaced-comment": [
+            "error",
+            "always"
+        ],
+        "padding-line-between-statements": [
+            "error",
+            {
+                "blankLine": "always",
+                "prev": "import",
+                "next": "*"
+            },
+            {
+                "blankLine": "never",
+                "prev": "import",
+                "next": "import"
+            },
+            {
+                "blankLine": "always",
+                "prev": "class",
+                "next": "*"
+            }
+        ],
+        "lines-between-class-members": "off",
+        "@typescript-eslint/lines-between-class-members": [
+            "error",
+            "always",
+            {
+                "exceptAfterSingleLine": true
+            }
+        ],
         "@typescript-eslint/await-thenable": "error",
         "@typescript-eslint/no-for-in-array": "error",
         "@typescript-eslint/no-misused-promises": "error",
@@ -44,6 +78,7 @@
         "@typescript-eslint/prefer-includes": "error",
         "@typescript-eslint/prefer-regexp-exec": "error",
         "@typescript-eslint/prefer-string-starts-ends-with": "error",
+        "@typescript-eslint/explicit-member-accessibility": "error",
         "require-await": "off",
         "@typescript-eslint/require-await": "error",
         "@typescript-eslint/unbound-method": "error",
@@ -97,7 +132,7 @@
         "@typescript-eslint/no-unnecessary-qualifier": "warn",
         "@typescript-eslint/no-unnecessary-type-arguments": "warn",
         "@typescript-eslint/member-ordering": "warn",
-        "@typescript-eslint/strict-boolean-expressions": "warn",
+        "@typescript-eslint/strict-boolean-expressions": "off",
         "@typescript-eslint/prefer-as-const": "warn",
         "@typescript-eslint/prefer-for-of": "warn",
         "@typescript-eslint/prefer-function-type": "warn",
@@ -113,7 +148,7 @@
                 "ignoreParameters": true
             }
         ],
-        "@typescript-eslint/no-unused-vars": "warn",
+        "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars-experimental": "warn"
     }
 }

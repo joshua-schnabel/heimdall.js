@@ -9,21 +9,21 @@ log4js:
   categories:
     default:
       appenders:
-      - stdout
+        - stdout
       level: info
     stdout:
       appenders:
-      - stdout
+        - stdout
       level: info
     debug:
       appenders:
-      - stdout
+        - stdout
       level: debug
     http:
       appenders:
-      - stdout
-      level: error
+        - stdout
+      level: info
     security:
       appenders:
-      - err
+        - err
       level: error
