@@ -9,6 +9,8 @@ import * as hpp from "hpp";
 import * as cors from "cors";
 import * as cookieParser from "cookie-parser";
 import errorMiddleware from "./middlewares/error.middleware";
+import * as swaggerJSDoc from "swagger-jsdoc";
+import * as swaggerUi from "swagger-ui-express";
 
 export default class App {
   public readonly app: express.Application;
@@ -23,7 +25,7 @@ export default class App {
 
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
-    // this.initializeSwagger();
+    this.initializeSwagger();
     this.initializeErrorHandling();
   }
 
@@ -31,6 +33,21 @@ export default class App {
     this.app.listen(this.port, () => {
       LOG.info("Server listening on the port %d", this.port);
     });
+  }
+
+  private initializeSwagger (): void {
+    const options = {
+      swaggerDefinition: {
+        info: {
+          title: "REST API",
+          version: "1.0.0",
+          description: "Example docs"
+        }
+      },
+      apis: ["swagger.yaml"]
+    };
+    const specs = swaggerJSDoc(options);
+    this.app.use("/swagger", swaggerUi.serve, swaggerUi.setup(specs));
   }
 
   private initializeErrorHandling (): void {
