@@ -1,8 +1,8 @@
 import { Router } from "express";
 
-interface Route {
+interface HttpRoute {
   path?: string;
   router: Router;
 }
 
-export default Route;
+export default HttpRoute;

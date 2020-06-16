@@ -1,77 +1,28 @@
-import printBanner from "./utils/banner";
-import CONF from "./utils/config";
-import configLogger, { log, LOG } from "./utils/logger";
-import * as log4js from "log4js";
-import Routes from "./express/routes.interface";
-import * as express from "express";
-import * as helmet from "helmet";
-import * as hpp from "hpp";
-import * as cors from "cors";
-import * as cookieParser from "cookie-parser";
-import errorMiddleware from "./middlewares/error.middleware";
-import * as swaggerJSDoc from "swagger-jsdoc";
-import * as swaggerUi from "swagger-ui-express";
+import printBanner from "./banner";
+import log, { configLogger } from "./logging/logger";
+import InfrastructureAdapter from "./interfaces/infrastructureAdapter.interface";
+import { injectable, multiInject } from "inversify";
 
-export default class App {
-  public readonly app: express.Application;
-  public readonly port: (string | number);
+@injectable()
+class App {
+  private readonly adapter: InfrastructureAdapter[];
 
-  public constructor (routes: Routes[]) {
+  public constructor (@multiInject("InfrastructureAdapter") adapter: InfrastructureAdapter[]) {
+    this.adapter = adapter;
+  }
+
+  public start (): void {
     printBanner();
     configLogger();
-
-    this.app = express();
-    this.port = CONF.getValue("server.port");
-
-    this.initializeMiddlewares();
-    this.initializeRoutes(routes);
-    this.initializeSwagger();
-    this.initializeErrorHandling();
+    this.startInfrastructure(this.adapter);
   }
 
-  public listen (): void {
-    this.app.listen(this.port, () => {
-      LOG.info("Server listening on the port %d", this.port);
-    });
-  }
-
-  private initializeSwagger (): void {
-    const options = {
-      swaggerDefinition: {
-        info: {
-          title: "REST API",
-          version: "1.0.0",
-          description: "Example docs"
-        }
-      },
-      apis: ["swagger.yaml"]
-    };
-    const specs = swaggerJSDoc(options);
-    this.app.use("/swagger", swaggerUi.serve, swaggerUi.setup(specs));
-  }
-
-  private initializeErrorHandling (): void {
-    this.app.use(errorMiddleware);
-  }
-
-  private initializeMiddlewares (): void {
-    this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: true }));
-    this.app.use(cookieParser());
-    this.app.use(cors());
-    this.app.use(hpp());
-    this.app.use(helmet());
-
-    if (CONF.env().isDev) {
-      this.app.use(log4js.connectLogger(log("http"), { level: "info" }));
-    } else {
-      this.app.use(log4js.connectLogger(log("http"), { level: "debug" }));
-    }
-  }
-
-  private initializeRoutes (routes: Routes[]): void {
-    routes.forEach((route) => {
-      this.app.use("/", route.router);
+  private startInfrastructure (adapter: InfrastructureAdapter[]): void {
+    log.info("Start Infrastructure Adapters...");
+    adapter.forEach(element => {
+      element.start();
     });
   }
 }
+
+export default App;

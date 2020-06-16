@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import HttpException from "../exceptions/HttpException";
-import { log } from "../utils/logger";
+import { log } from "../../../application/logging/logger";
 
 const internelError = 500;
 
