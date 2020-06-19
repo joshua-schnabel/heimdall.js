@@ -9,7 +9,7 @@ import * as cors from "cors";
 import * as cookieParser from "cookie-parser";
 import errorMiddleware from "./middlewares/error.middleware";
 import InfrastructureAdapter from "../../application/interfaces/infrastructureAdapter.interface";
-import { injectable, injectAll } from "tsyringe";
+import { injectable } from "inversify";
 // import * as swaggerJSDoc from "swagger-jsdoc";
 // import * as swaggerUi from "swagger-ui-express";
 
@@ -20,15 +20,15 @@ export default class HttpInfrastructure implements InfrastructureAdapter {
 
   private readonly routes: Route[];
 
-  public constructor (@injectAll("HttpRoute") routes: Route[]) {
+  public constructor () {
     this.app = express();
     this.port = CONF.getValue("server.port");
-    this.routes = routes;
   }
 
   public start (): void {
+    LOG.error("Start HTTP");
     this.initializeMiddlewares();
-    this.initializeRoutes(this.routes);
+    // this.initializeRoutes(this.routes);
     this.initializeSwagger();
     this.initializeErrorHandling();
   }

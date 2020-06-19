@@ -6,6 +6,8 @@
     "baseUrl": "./src",
     "alwaysStrict": true,
     "noImplicitAny": true,
+    "lib": ["es6", "dom"],
+    "types": ["reflect-metadata"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
