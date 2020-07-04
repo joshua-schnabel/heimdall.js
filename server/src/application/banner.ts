@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import * as clc from "cli-color";
+import clc from "cli-color";
 
 const red = 196;
 const orange = 202;

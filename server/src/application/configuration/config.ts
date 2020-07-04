@@ -1,12 +1,15 @@
-import { cleanEnv, CleanEnv, str, port } from "envalid";
-import { safeLoad } from "js-yaml";
+import envalid from "envalid";
+import jsYaml from "js-yaml";
 import * as fs from "fs";
 import * as path from "path";
-import * as _ from "lodash";
+import _ from "lodash";
+
+const { safeLoad } = jsYaml;
+const __dirname = fs.realpathSync("./src/application/configuration/");
 
 export class Config {
   private static instance: Config = null;
-  private pEnv: CleanEnv & { readonly [varName: string]: string | undefined };
+  private pEnv: envalid.CleanEnv & { readonly [varName: string]: string | undefined };
   private pConfig: Record<string, unknown>;
   private pDefaultConfig: Record<string, unknown>;
 
@@ -31,7 +34,7 @@ export class Config {
     return value;
   }
 
-  public env (): CleanEnv {
+  public env (): envalid.CleanEnv {
     return this.pEnv;
   }
 
@@ -46,10 +49,10 @@ export class Config {
   }
 
   private loadEnviroment (): void {
-    this.pEnv = cleanEnv(process.env, {
-      "server.port": port({ default: undefined }),
-      H_CONFIGDIR: str({ default: "./config/" }),
-      H_CONFIGFILE: str({ default: "config.yml", devDefault: "config.dev.yml" })
+    this.pEnv = envalid.cleanEnv(process.env, {
+      "server.port": envalid.port({ default: undefined }),
+      H_CONFIGDIR: envalid.str({ default: "./config/" }),
+      H_CONFIGFILE: envalid.str({ default: "config.yml", devDefault: "config.dev.yml" })
     });
   }
 

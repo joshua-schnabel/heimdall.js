@@ -1,81 +1,58 @@
 import CONF from "../../application/configuration/config";
-import LOG, { log } from "../../application/logging/logger";
-import * as log4js from "log4js";
-import Route from "./HttpRoute.interface";
-import * as express from "express";
-import * as helmet from "helmet";
-import * as hpp from "hpp";
-import * as cors from "cors";
-import * as cookieParser from "cookie-parser";
-import errorMiddleware from "./middlewares/error.middleware";
+import { log } from "../../application/logging/logger"; import HttpControler, { symbol as hcSymbol } from "./interfaces/HttpControler.interface";
+import { Express } from "express";
 import InfrastructureAdapter from "../../application/interfaces/infrastructureAdapter.interface";
-import { injectable } from "inversify";
+import { injectable, injectAll } from "../../autoload/tsyringe";
+import rc from "routing-controllers";
+import { BeforeMiddlewareSymbol, BeforeMiddleware, AfterMiddlewareSymbol } from "./middlewares/middleware";
+
+const LOG = log("http");
+
 // import * as swaggerJSDoc from "swagger-jsdoc";
 // import * as swaggerUi from "swagger-ui-express";
 
 @injectable()
 export default class HttpInfrastructure implements InfrastructureAdapter {
-  public readonly app: express.Application;
-  public readonly port: (string | number);
+  public readonly port: string | number;
 
-  private readonly routes: Route[];
+  private readonly controler: Function[] = [];
+  private readonly middleware: Function[] = [];
 
-  public constructor () {
-    this.app = express();
+  private app: Express;
+
+  public constructor (
+    @injectAll(hcSymbol) controler: HttpControler[],
+    @injectAll(BeforeMiddlewareSymbol) beforeMiddleware: BeforeMiddleware[],
+    @injectAll(AfterMiddlewareSymbol) afterMiddleware: BeforeMiddleware[]
+  ) {
     this.port = CONF.getValue("server.port");
+    controler.forEach((c) => {
+      this.controler.push(c.constructor);
+    });
+    LOG.info("Register %d Controllers", controler.length);
+    beforeMiddleware.forEach((c) => {
+      this.middleware.push(c.constructor);
+    });
+    LOG.info("Register %d Middlewares with before", beforeMiddleware.length - 1);
+    afterMiddleware.forEach((c) => {
+      this.middleware.push(c.constructor);
+    });
+    LOG.info("Register %d Middlewares with after", afterMiddleware.length - 1);
   }
 
   public start (): void {
+    this.app = rc.createExpressServer({
+      controllers: this.controler,
+      middlewares: this.middleware,
+      defaultErrorHandler: false
+    });
     LOG.error("Start HTTP");
-    this.initializeMiddlewares();
-    // this.initializeRoutes(this.routes);
-    this.initializeSwagger();
-    this.initializeErrorHandling();
+    this.listen();
   }
 
-  public listen (): void {
+  private listen (): void {
     this.app.listen(this.port, () => {
       LOG.info("Server listening on the port %d", this.port);
-    });
-  }
-
-  private initializeSwagger (): void {
-    const options = {
-      swaggerDefinition: {
-        info: {
-          title: "REST API",
-          version: "1.0.0",
-          description: "Example docs"
-        }
-      },
-      apis: ["swagger.yaml"]
-    };
-    // const specs = swaggerJSDoc(options);
-    // this.app.use("/swagger", swaggerUi.serve, swaggerUi.setup(specs));
-  }
-
-  private initializeErrorHandling (): void {
-    this.app.use(errorMiddleware);
-  }
-
-  private initializeMiddlewares (): void {
-    this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: true }));
-    this.app.use(cookieParser());
-    this.app.use(cors());
-    this.app.use(hpp());
-    this.app.use(helmet());
-
-    if (CONF.env().isDev) {
-      this.app.use(log4js.connectLogger(log("http"), { level: "info" }));
-    } else {
-      this.app.use(log4js.connectLogger(log("http"), { level: "debug" }));
-    }
-  }
-
-  private initializeRoutes (routes: Route[]): void {
-    routes.forEach((route: Route) => {
-      this.app.use("/", route.router);
     });
   }
 }

@@ -1,13 +1,13 @@
 import printBanner from "./banner";
 import log, { configLogger } from "./logging/logger";
 import InfrastructureAdapter, { symbol as IASymbol } from "./interfaces/infrastructureAdapter.interface";
-import { injectable, multiInject } from "inversify";
+import { injectable, injectAll } from "../autoload/tsyringe";
 
 @injectable()
 class App {
   private readonly adapter: InfrastructureAdapter[] = [];
 
-  public constructor (@multiInject(IASymbol) adapter: InfrastructureAdapter[]) {
+  public constructor (@injectAll(IASymbol) adapter: InfrastructureAdapter[]) {
     this.adapter = adapter;
   }
 

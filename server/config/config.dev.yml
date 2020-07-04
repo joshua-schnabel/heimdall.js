@@ -23,6 +23,10 @@ log4js:
       appenders:
         - stdout
       level: debug
+    auto:
+      appenders:
+        - stdout
+      level: debug
     security:
       appenders:
         - err
