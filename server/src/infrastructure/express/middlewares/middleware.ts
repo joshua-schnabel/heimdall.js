@@ -3,7 +3,7 @@
 import rc, { ExpressMiddlewareInterface, ExpressErrorMiddlewareInterface } from "routing-controllers";
 import { RequestHandler, Request, Response } from "express";
 import { NextFunction } from "express-serve-static-core";
-import { registry } from "../../../autoload/tsyringe";
+import { registry } from "@autoload/tsyringe";
 
 const { Middleware } = rc;
 

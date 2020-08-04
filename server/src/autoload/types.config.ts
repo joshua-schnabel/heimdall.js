@@ -4,7 +4,7 @@
 import { container } from "./tsyringe";
 import glob from "fast-glob";
 import path from "path";
-import { log } from "../application/logging/logger";
+import { log } from "@application/logging/logger";
 import AutoLoadable from "./autoloadable";
 import Module from "module";
 

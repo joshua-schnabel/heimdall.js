@@ -1,5 +1,9 @@
 server:
   port: 3000
+mqtt:
+  adress: tcp://atlantis.fritz.box
+  user: http2mqtt
+  password: http2mqttPass
 log4js:
   appenders:
     stdout:
@@ -20,6 +24,10 @@ log4js:
         - stdout
       level: debug
     http:
+      appenders:
+        - stdout
+      level: debug
+    mqtt:
       appenders:
         - stdout
       level: debug

@@ -1,5 +1,9 @@
 server:
   port: 3000
+mqtt:
+  adress: tcp://localhost
+  user: mqtt
+  password: mqtt
 log4js:
   appenders:
     stdout:
@@ -22,7 +26,11 @@ log4js:
     http:
       appenders:
         - stdout
-      level: info
+      level: error
+    mqtt:
+      appenders:
+        - stdout
+      level: error
     auto:
       appenders:
         - stdout

@@ -1,3 +1,3 @@
 import tsyringe from "tsyringe";
 
-export const { injectable, injectAll, container, Lifecycle, registry } = tsyringe;
+export const { injectable, injectAll, inject, container, Lifecycle, registry } = tsyringe;

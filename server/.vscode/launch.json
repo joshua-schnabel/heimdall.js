@@ -5,7 +5,7 @@
 		"type": "node",
 		"request": "launch",
 		"args": ["${workspaceRoot}/src/server.ts"],
-		"runtimeArgs": ["--loader", "ts-node/esm.mjs", "--experimental-top-level-await", "--experimental-specifier-resolution=node"],
+		"runtimeArgs": ["--loader", "./src/myloader.mjs", "--experimental-top-level-await", "--experimental-specifier-resolution=node", "--experimental-specifier-resolution=node"],
 		"cwd": "${workspaceRoot}",
 		"protocol": "inspector",
 		"sourceMaps": true,

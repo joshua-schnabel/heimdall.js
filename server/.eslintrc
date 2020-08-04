@@ -17,7 +17,8 @@
   ],
   "rules": {
     "no-console": ["error"],
-    "semi": ["error", "always"],
+    "semi": "off",
+    "@typescript-eslint/semi": ["error", "always"],
     "quotes": ["error", "double"],
     "indent": ["error", 2],
     "no-multiple-empty-lines": [
@@ -83,12 +84,15 @@
     "@typescript-eslint/no-require-imports": "error",
     "@typescript-eslint/no-this-alias": "error",
     "@typescript-eslint/no-throw-literal": "error",
-    "@typescript-eslint/no-type-alias": "error",
+    "@typescript-eslint/no-type-alias": ["error", {
+      "allowAliases": "always"
+    }],
     "@typescript-eslint/no-unsafe-call": "error",
     "@typescript-eslint/no-unsafe-member-access": "error",
     "@typescript-eslint/no-unsafe-return": "error",
     "no-unused-expressions": "off",
     "@typescript-eslint/no-unused-expressions": "error",
+    "no-extra-semi": "off",
     "@typescript-eslint/no-extra-semi": "error",
     "@typescript-eslint/no-extraneous-class": "error",
     "@typescript-eslint/no-floating-promises": "error",
@@ -105,7 +109,7 @@
       "error",
       {
         "ignoreArrayIndexes": true,
-        "ignore": [1, 0, 2, 3]
+        "ignore": [-1, 1, 0, 2, 3]
       }
     ],
     "@typescript-eslint/no-unnecessary-boolean-literal-compare": "warn",

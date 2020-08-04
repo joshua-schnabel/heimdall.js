@@ -1,12 +1,12 @@
-import AutoLoadable from "../../../autoload/autoloadable";
-import { registry } from "../../../autoload/tsyringe";
-import { symbol } from "../../express/interfaces/HttpControler.interface";
-import index from "./index";
+import AutoLoadable from "@autoload/autoloadable";
+import { registry } from "@autoload/tsyringe";
+import { symbol } from "@infrastructure/express/interfaces/HttpControler.interface";
+import MqttApiController from "./mqtt.controller";
 
 @registry([
   {
     token: symbol,
-    useClass: index
+    useClass: MqttApiController
   }
 ])
 class HttpPresentationAutoLoadable extends AutoLoadable {

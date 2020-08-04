@@ -2,7 +2,7 @@
 import { RequestHandler, Request, Response, ExpressErrorMiddlewareInterface, NextFunction, Middleware } from "./middleware";
 import HttpException from "../exceptions/HttpException";
 import HttpStatus from "http-status-codes";
-import log4js from "log4js"; import { log } from "../../../application/logging/logger";
+import log4js from "log4js"; import { log } from "@application/logging/logger";
 
 @Middleware({ type: "after" })
 export default class ErrorMiddleware implements ExpressErrorMiddlewareInterface {

@@ -1,12 +1,13 @@
-import CONF from "../../application/configuration/config";
-import { log } from "../../application/logging/logger"; import HttpControler, { symbol as hcSymbol } from "./interfaces/HttpControler.interface";
+import CONF from "@config";
+import { log, Logger } from "@logger";
+import HttpControler, { symbol as hcSymbol } from "./interfaces/HttpControler.interface";
 import { Express } from "express";
-import InfrastructureAdapter from "../../application/interfaces/infrastructureAdapter.interface";
-import { injectable, injectAll } from "../../autoload/tsyringe";
+import InfrastructureAdapter from "@application/interfaces/infrastructureAdapter.interface";
+import { injectable, injectAll } from "@autoload/tsyringe";
 import rc from "routing-controllers";
 import { BeforeMiddlewareSymbol, BeforeMiddleware, AfterMiddlewareSymbol } from "./middlewares/middleware";
 
-const LOG = log("http");
+const LOG: Logger = log("http");
 
 // import * as swaggerJSDoc from "swagger-jsdoc";
 // import * as swaggerUi from "swagger-ui-express";
@@ -46,7 +47,7 @@ export default class HttpInfrastructure implements InfrastructureAdapter {
       middlewares: this.middleware,
       defaultErrorHandler: false
     });
-    LOG.error("Start HTTP");
+    LOG.info("Start HTTP");
     this.listen();
   }
 

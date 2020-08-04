@@ -51,6 +51,9 @@ export class Config {
   private loadEnviroment (): void {
     this.pEnv = envalid.cleanEnv(process.env, {
       "server.port": envalid.port({ default: undefined }),
+      "mqtt.adress": envalid.port({ default: undefined }),
+      "mqtt.user": envalid.port({ default: undefined }),
+      "mqtt.password": envalid.port({ default: undefined }),
       H_CONFIGDIR: envalid.str({ default: "./config/" }),
       H_CONFIGFILE: envalid.str({ default: "config.yml", devDefault: "config.dev.yml" })
     });
