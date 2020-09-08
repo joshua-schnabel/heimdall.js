@@ -4,6 +4,15 @@ mqtt:
   adress: tcp://atlantis.fritz.box
   user: http2mqtt
   password: http2mqttPass
+users:
+  dev_read:
+    api-key: secret_read
+    password: secret_read
+    rights: MQTT_READ
+  dev_write:
+    api-key: secret_write
+    password: secret_write
+    rights: MQTT_READ,MQTT_WRITE
 log4js:
   appenders:
     stdout:
@@ -26,7 +35,7 @@ log4js:
     http:
       appenders:
         - stdout
-      level: debug
+      level: trace
     mqtt:
       appenders:
         - stdout

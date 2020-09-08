@@ -6,6 +6,7 @@ import InfrastructureAdapter from "@application/interfaces/infrastructureAdapter
 import { injectable, injectAll } from "@autoload/tsyringe";
 import rc from "routing-controllers";
 import { BeforeMiddlewareSymbol, BeforeMiddleware, AfterMiddlewareSymbol } from "./middlewares/middleware";
+import auth from "./HttpAuth";
 
 const LOG: Logger = log("http");
 
@@ -41,11 +42,17 @@ export default class HttpInfrastructure implements InfrastructureAdapter {
     LOG.info("Register %d Middlewares with after", afterMiddleware.length - 1);
   }
 
+  public priority (): number {
+    const prio = 10;
+    return prio;
+  }
+
   public start (): void {
     this.app = rc.createExpressServer({
       controllers: this.controler,
       middlewares: this.middleware,
-      defaultErrorHandler: false
+      defaultErrorHandler: false,
+      authorizationChecker: auth
     });
     LOG.info("Start HTTP");
     this.listen();

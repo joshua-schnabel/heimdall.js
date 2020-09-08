@@ -18,7 +18,7 @@ export default class MessagePersistor implements NewMessageEventListener {
       if (event instanceof NewMessageEvent) {
         return new Promise((resolve, reject) => {
           this.repository.store(event.getMessage()).then((message) => {
-            log.debug("Stored Message with topic %s and content %s", message.getTopic(), message.getContent());
+            log.debug("Stored Message with topic %s", message.getTopic());
             resolve();
           }).catch((err: Error) => {
             log.error("Error while storing Message: %s", err.message);

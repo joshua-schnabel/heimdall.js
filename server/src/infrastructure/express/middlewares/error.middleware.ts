@@ -15,7 +15,7 @@ export default class ErrorMiddleware implements ExpressErrorMiddlewareInterface 
   }
 
   public error (error: HttpException, req: Request, res: Response, _next: NextFunction): void {
-    const status: number = error.status || HttpStatus.INTERNAL_SERVER_ERROR;
+    const status: number = error.httpCode || HttpStatus.INTERNAL_SERVER_ERROR;
     const message: string = error.message || "Radical bytes have stolen a variable.";
 
     if (status >= 400 && status <= 499) {

@@ -5,12 +5,12 @@ import { RequestHandler, Request, Response } from "express";
 import { NextFunction } from "express-serve-static-core";
 import { registry } from "@autoload/tsyringe";
 
-const { Middleware } = rc;
+const { UseBefore, UseAfter, Middleware } = rc;
 
 export const BeforeMiddlewareSymbol = Symbol.for("BeforeMiddleware");
 export const AfterMiddlewareSymbol = Symbol.for("AfterMiddleware");
 
-export { ExpressMiddlewareInterface, RequestHandler, Middleware, Request, Response, NextFunction, ExpressErrorMiddlewareInterface };
+export { UseBefore, UseAfter, ExpressMiddlewareInterface, RequestHandler, Middleware, Request, Response, NextFunction, ExpressErrorMiddlewareInterface };
 
 export abstract class BeforeMiddleware implements ExpressMiddlewareInterface {
     public abstract use(request: Request, response: Response, next: NextFunction): void;

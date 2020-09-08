@@ -5,3 +5,4 @@ import DEP from "@autoload/types.config";
 import App from "@application/app";
 
 DEP.resolve(App).start();
+

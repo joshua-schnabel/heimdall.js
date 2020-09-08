@@ -39,7 +39,7 @@ export class Config {
   }
 
   private loadYAML (): void {
-    const configFilePath = path.resolve(this.pEnv.H_CONFIGDIR + this.pEnv.H_CONFIGFILE);
+    const configFilePath = path.resolve(this.pEnv.CONFIGDIR + this.pEnv.CONFIGFILE);
     const defaultConfigFilePath = path.resolve(__dirname, "config.default.yml");
 
     this.pDefaultConfig = safeLoad(fs.readFileSync(path.resolve(defaultConfigFilePath), "utf8"), { filename: configFilePath, json: true });
@@ -51,11 +51,15 @@ export class Config {
   private loadEnviroment (): void {
     this.pEnv = envalid.cleanEnv(process.env, {
       "server.port": envalid.port({ default: undefined }),
-      "mqtt.adress": envalid.port({ default: undefined }),
-      "mqtt.user": envalid.port({ default: undefined }),
-      "mqtt.password": envalid.port({ default: undefined }),
-      H_CONFIGDIR: envalid.str({ default: "./config/" }),
-      H_CONFIGFILE: envalid.str({ default: "config.yml", devDefault: "config.dev.yml" })
+      "mqtt.adress": envalid.url({ default: undefined }),
+      "mqtt.user": envalid.str({ default: undefined }),
+      "mqtt.password": envalid.str({ default: undefined }),
+      "users.httpuser.api-key": envalid.str({ default: undefined }),
+      "users.httpuser.password": envalid.str({ default: undefined }),
+      "users.httpuser.rights": envalid.str({ default: undefined }),
+
+      CONFIGDIR: envalid.str({ default: "./config/" }),
+      CONFIGFILE: envalid.str({ default: "config.yml", devDefault: "config.dev.yml" })
     });
   }
 

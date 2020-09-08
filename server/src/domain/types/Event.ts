@@ -1,14 +1,12 @@
-// import { v5 as uuidv5 } from "uuid";
+import CryptoJS from "crypto-js";
 
 export default abstract class Event {
-    private readonly namespace: string = "1b671a64-40d5-491e-99b0-da01ff1f3341";
-
     private readonly id: string;
     private readonly timestamp: number;
 
     public constructor () {
-      this.id = "";
       this.timestamp = new Date().getTime();
+      this.id = CryptoJS.SHA256(this.timestamp + this.getEventName()).toString(CryptoJS.enc.Hex);
     }
 
     public getId (): string {

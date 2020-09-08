@@ -8,6 +8,7 @@ export default class EventManager {
     private readonly listeners = new Map();
 
     public constructor (@injectAll(ELSymbol) listeners: EventListener<Event>[]) {
+      log.info("Found %d Eventlisteners", listeners.length);
       listeners.forEach((listener: EventListener<Event>) => {
         const events: Function[] = Reflect.getMetadata("events:acceptance", listener, "consumeEvent");
         events.forEach((event) => {
@@ -22,15 +23,20 @@ export default class EventManager {
           }
         });
       });
-      log.info("Found %d Eventlisteners", this.listeners.size);
     }
 
-    public async publishEvent (event: Event): Promise<void> {
+    public async publishEvent (event: Event, exclude?: string): Promise<void> {
       const eventName = event.constructor.name;
       const listeners: EventListener<Event>[] = this.listeners.get(eventName);
       const promises: Promise<void>[] = [];
       listeners.forEach((l) => {
-        promises.push(l.consumeEvent(event));
+        if (exclude !== undefined) {
+          if (l.constructor.name !== exclude) {
+            promises.push(l.consumeEvent(event));
+          }
+        } else {
+          promises.push(l.consumeEvent(event));
+        }
       });
       return new Promise<void>((resolve, reject) => {
         Promise.allSettled(promises)
