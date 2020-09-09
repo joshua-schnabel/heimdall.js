@@ -12,19 +12,19 @@ jobs:
       name: BUILD_DATE
       uses: nick-invision/persist-action-data@v1
       with:
-        data: ${{ ${date -u +"%Y-%m-%dT%H:%M:%SZ"} }}
+        data: ${date -u +"%Y-%m-%dT%H:%M:%SZ"}
         variable: BUILD_DATE
     - 
       name: VCS_REF
       uses: nick-invision/persist-action-data@v1
       with:
-        data: ${{ $(git rev-parse --short "$GITHUB_SHA") }}
+        data: $(git rev-parse --short "$GITHUB_SHA")
         variable: VCS_REF
     - 
       name: VERSION
       uses: nick-invision/persist-action-data@v1
       with:
-        data: ${{ head -n 1 ./CHANGELOG }}
+        data: ${head -n 1 ./CHANGELOG}
         variable: VERSION
   docker:
     runs-on: ubuntu-latest
