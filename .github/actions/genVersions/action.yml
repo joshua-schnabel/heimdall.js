@@ -1,10 +1,5 @@
 name: 'Generate Versions'
 description: 'Extract Versions from changelog'
-inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
 outputs:
   VERSION: 
     description: "VERSION"
