@@ -1,0 +1,37 @@
+name: 'Generate Versions'
+description: 'Extract Versions from changelog'
+inputs:
+  VERSION:
+    required: true
+  VERSION_RELEASE:
+    required: true
+  VERSION_MINOR:
+    required: true
+  branch:
+    required: true
+    default: true
+  isNightly:
+    required: true
+    default: false
+outputs:
+  TAGS: 
+    description: "TAGS"
+    value: ${{ steps.generate_tags.outputs.TAGS }}
+runs:
+  using: "composite"
+  steps: 
+     - 
+      name: Generate Tags
+      id: generate_tags
+      shell: bash
+      run: |
+        if [ ${{ inputs.branch }} = 'refs/heads/master' ] ; then
+            echo 'Master'
+            if [ ${{ inputs.isNightly }} = true ] ; then
+              echo 'Nightly'
+            else 
+              echo 'Normal'
+            fi
+        elseif [ ${{ inputs.branch }} = 'refs/heads/dev' ] ; then
+            echo 'Master'
+        fi
