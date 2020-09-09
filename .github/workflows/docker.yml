@@ -18,7 +18,8 @@ jobs:
       name: Generate Versions
       uses: ./.github/actions/genVersions
      -
-        name: Build Images
-        run: |
-          echo ${{ steps.generate_version.genVersions.BUILD_DATE }}
-          echo $BUILD_DATE
+      name: Build Images
+      run: |
+       echo ${{ github.event_path }}
+       echo ${{ steps.genVersions.outputs.BUILD_DATE }}
+       echo $BUILD_DATE
