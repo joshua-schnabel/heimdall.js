@@ -18,8 +18,8 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       
 # Update packages and install packages 
 RUN apk update && apk upgrade && \
-    apk --no-cache add bash curl
-	  rm -rf /var/cache/apk/*
+    apk --no-cache add bash curl && \
+    rm -rf /var/cache/apk/*
     
 # Ensure www-data user exists
 # 82 is the standard uid/gid for "www-data" in Alpine
