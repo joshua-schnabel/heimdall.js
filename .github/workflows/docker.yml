@@ -12,7 +12,7 @@ jobs:
       name: BUILD_DATE
       uses: nick-invision/persist-action-data@v1
       with:
-        data: ${{ date -u +"%Y-%m-%dT%H:%M:%SZ" }}
+        data: ${{ ${date -u +"%Y-%m-%dT%H:%M:%SZ"} }}
         variable: BUILD_DATE
     - 
       name: VCS_REF
