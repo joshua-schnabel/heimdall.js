@@ -20,6 +20,4 @@ jobs:
      -
       name: Build Images
       run: |
-       echo ${{ github.event_path }}
-       echo ${{ steps.genVersions.outputs.BUILD_DATE }}
-       echo $BUILD_DATE
+       cat ${{ github.event_path }}
