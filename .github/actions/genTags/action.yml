@@ -32,6 +32,6 @@ runs:
             else 
               echo 'Normal'
             fi
-        elseif [ ${{ inputs.branch }} = 'refs/heads/dev' ] ; then
+        elif [ ${{ inputs.branch }} = 'refs/heads/dev' ] ; then
             echo 'Master'
         fi
