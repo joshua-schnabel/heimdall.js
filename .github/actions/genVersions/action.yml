@@ -1,14 +1,33 @@
 name: 'Generate Versions'
 description: 'Extract Versions from changelog'
+inputs:
+  who-to-greet:  # id of input
+    description: 'Who to greet'
+    required: true
+    default: 'World'
+outputs:
+  VERSION: 
+    description: "VERSION"
+    value: ${{ steps.generate_version.outputs.VERSION }}
+  BUILD_DATE: 
+    description: "BUILD_DATE"
+    value: ${{ steps.generate_version.outputs.BUILD_DATE }}
+  GITHASH: 
+    description: "GITHASH"
+    value: ${{ steps.generate_version.outputs.GITHASH }}
+  VERSION_RELEASE: 
+    description: "VERSION_RELEASE"
+    value: ${{ steps.generate_version.outputs.VERSION_RELEASE }}
+  VERSION_MINOR: 
+    description: "VERSION_MINOR"
+    value: ${{ steps.generate_version.outputs.VERSION_MINOR }}
 runs:
   using: "composite"
   steps: 
      - 
-        name: Checkout
-        uses: actions/checkout@v2
-     - 
-      name: Generate ENV
-      id: generate_env
+      name: Generate Version
+      id: generate_version
+      shell: bash
       run: |
         VERSION=$(head -n 1 ./CHANGELOG | awk '{print tolower($0)}')
         VERSION_RELEASE=$(echo $VERSION | cut -d '-' -f 2 -s)
@@ -16,38 +35,15 @@ runs:
         VERSION_MINOR=${VERSION_PATCH%.*}
         BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
         GITHASH=$(git rev-parse "$GITHUB_SHA")
-        echo "VERSION=$VERSION"
-        echo "BUILD_DATE=$BUILD_DATE"
-        echo "GITHASH=$GITHUB_SHA"
-        echo "VERSION_RELEASE=$VERSION_RELEASE"
-        echo "VERSION_PATCH=$VERSION_PATCH"
-        echo "VERSION_MINOR=$VERSION_MINOR"
         
         echo "::set-output name=VERSION::$VERSION"
         echo "::set-output name=BUILD_DATE::$BUILD_DATE"
         echo "::set-output name=GITHASH::$GITHASH"
+        echo "::set-output name=VERSION_RELEASE::$VERSION_RELEASE"
+        echo "::set-output name=VERSION_MINOR::$VERSION_MINOR"
         
         echo "::set-env name=VERSION::$VERSION"
+        echo "::set-env name=BUILD_DATE::$BUILD_DATE"
+        echo "::set-env name=GITHASH::$GITHASH"
         echo "::set-env name=VERSION_RELEASE::$VERSION_RELEASE"
-        echo "::set-env name=VERSION_PATCH::$VERSION_PATCH"
         echo "::set-env name=VERSION_MINOR::$VERSION_MINOR"
-        
-        echo "${{ github.event.push.type }}"
-     - 
-      name: GITHASH
-      uses: nick-invision/persist-action-data@v1
-      with:
-        data: ${{ steps.generate_env.outputs.GITHASH }}
-        variable: GITHASH
-     - 
-      name: BUILD_DATE
-      uses: nick-invision/persist-action-data@v1
-      with:
-        data: ${{ steps.generate_env.outputs.BUILD_DATE }}
-        variable: BUILD_DATE
-     - 
-      name: VERSION
-      uses: nick-invision/persist-action-data@v1
-      with:
-        data: ${{ steps.generate_env.outputs.VERSION }}
-        variable: VERSION
