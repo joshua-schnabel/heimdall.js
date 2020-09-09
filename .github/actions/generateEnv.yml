@@ -1,0 +1,14 @@
+name: 'Generate Env File'
+description: 'Generate Env File'
+inputs:
+  variables:
+    required: true
+runs:
+  using: "composite"
+  steps: 
+     - 
+      name: Generate Env File
+      id: generate_file
+      shell: bash
+      run: |
+        echo ${{ inputs.variables }}
