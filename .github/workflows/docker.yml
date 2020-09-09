@@ -7,44 +7,18 @@ on:
   push:
     branches: master
 jobs:
-  predocker:
+  docker:
     runs-on: ubuntu-latest
     steps:
      - 
       name: Checkout
       uses: actions/checkout@v2
      - 
+      id: genVersions
       name: Generate Versions
       uses: ./.github/actions/genVersions
-     - 
-      name: Generate Master Tags
-      id: generate_tags_master
-      if: github.ref == 'refs/heads/master'
-      run: |
-        TAGS="$IMAGE_NAME:$VERSION\n$IMAGE_NAME:$VERSION_MINOR\n$IMAGE_NAME:latest"
-        echo "::set-output name=TAGS::$TAGS"
-     - 
-      name: Generate Dev Tags
-      id: generate_tags_dev
-      if: github.ref == 'refs/heads/dev'
-      run: |
-        TAGS="$IMAGE_NAME:$VERSION\n$IMAGE_NAME:$VERSION_MINOR-$VERSION_RELEASE\n$IMAGE_NAME:dev-latest"
-        echo "::set-output name=TAGS::$TAGS"
-     - 
-      name: TAGS
-      uses: nick-invision/persist-action-data@v1
-      with:
-        data: ${{ steps.generate_env.outputs.TAGS }}
-        variable: TAGS
-
-  docker:
-    runs-on: ubuntu-latest
-    needs: predocker
-    if: github.ref == 'refs/heads/master2'
-    steps:
-      - 
-        name: Checkout
-        uses: actions/checkout@v2
-      -
+     -
         name: Build Images
-        uses: ./.github/actions/buildImages
+        run: |
+          echo ${{ steps.generate_version.genVersions.BUILD_DATE }}
+          echo $BUILD_DATE
