@@ -16,7 +16,7 @@ jobs:
       id: generate_env
       run: |
         VERSION=$(head -n 1 ./CHANGELOG)
-        VERSION_RELEASE=$(echo $VERSION | cut -d '-' -f 2 -s)
+        VERSION_RELEASE=$(echo $VERSION | cut -d '-' -f 2 -s | awk '{print tolower($0)})
         VERSION_PATCH=${VERSION%-*}
         VERSION_MINOR=${VERSION_PATCH%.*}
         BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
@@ -28,6 +28,14 @@ jobs:
         echo "VERSION_PATCH=$VERSION_PATCH"
         echo "VERSION_MINOR=$VERSION_MINOR"
         
+        echo "::set-output name=VERSION::$VERSION"
+        echo "::set-output name=BUILD_DATE::$BUILD_DATE"
+        echo "::set-output name=GITHASH::$GITHASH"
+     - 
+      name: Generate Tags
+      id: generate_tags
+      if: github.ref == 'refs/heads/master'
+      run: |
         echo "::set-output name=VERSION::$VERSION"
         echo "::set-output name=BUILD_DATE::$BUILD_DATE"
         echo "::set-output name=GITHASH::$GITHASH"
