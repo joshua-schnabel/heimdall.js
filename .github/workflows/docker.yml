@@ -31,7 +31,7 @@ jobs:
         name: Setup env
         uses: jwulf/add-env-vars-action@master
         with:
-          map: '{"VERSION": "$VERSION", "GITHASH": "${GITHASH}", "DOCKERTAGS":"${{ steps.genTags.outputs.TAGS }}"}'   
+          map: '{"ABC":"abc", "VERSION": "$VERSION", "GITHASH": "${GITHASH}", "DOCKERTAGS":"${{ steps.genTags.outputs.TAGS }}"}'   
   docker:
     needs: [prepair]
     runs-on: ubuntu-latest
@@ -42,6 +42,7 @@ jobs:
      -
       name: Build Images
       run: |
-       echo ${{ env.VERSION }}
-       echo ${{ env.GITHASH }}
-       echo ${{ env.DOCKERTAGS }}
+       echo "VERSION=${{ env.VERSION }}"
+       echo "GITHASH=${{ env.GITHASH }}"
+       echo "DOCKERTAGS=${{ env.DOCKERTAGS }}"
+       echo "ABC=${{ env.ABC }}"
