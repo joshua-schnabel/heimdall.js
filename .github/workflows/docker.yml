@@ -17,7 +17,7 @@ jobs:
       name: Generate ENV
       id: generate_env
       run: |
-        VERSION=$(head -n 1 ./CHANGELOG | awk '{print tolower($0)})
+        VERSION=$(head -n 1 ./CHANGELOG | awk '{print tolower($0)}')
         VERSION_RELEASE=$(echo $VERSION | cut -d '-' -f 2 -s)
         VERSION_PATCH=${VERSION%-*}
         VERSION_MINOR=${VERSION_PATCH%.*}
