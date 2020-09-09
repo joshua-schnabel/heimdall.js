@@ -39,7 +39,7 @@ jobs:
         echo "::set-env name=VERSION_PATCH::$VERSION_PATCH"
         echo "::set-env name=VERSION_MINOR::$VERSION_MINOR"
         
-        echo "${{ github.event }}"
+        echo "${{ github.event.type }}"
      - 
       name: Generate Master Tags
       id: generate_tags_master
