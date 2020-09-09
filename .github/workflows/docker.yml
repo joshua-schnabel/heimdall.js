@@ -36,9 +36,10 @@ jobs:
       id: generate_tags
       if: github.ref == 'refs/heads/master'
       run: |
-        echo "::set-output name=VERSION::$VERSION"
-        echo "::set-output name=BUILD_DATE::$BUILD_DATE"
-        echo "::set-output name=GITHASH::$GITHASH"
+        echo "VERSION=$VERSION"
+        echo "VERSION_RELEASE=$VERSION_RELEASE"
+        echo "VERSION_PATCH=$VERSION_PATCH"
+        echo "VERSION_MINOR=$VERSION_MINOR"
      - 
       name: GITHASH
       uses: nick-invision/persist-action-data@v1
