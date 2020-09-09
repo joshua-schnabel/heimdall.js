@@ -17,8 +17,8 @@ jobs:
       name: Generate ENV
       id: generate_env
       run: |
-        VERSION=$(head -n 1 ./CHANGELOG)
-        VERSION_RELEASE=$(echo $VERSION | cut -d '-' -f 2 -s | awk '{print tolower($0)}')
+        VERSION=$(head -n 1 ./CHANGELOG | awk '{print tolower($0)})
+        VERSION_RELEASE=$(echo $VERSION | cut -d '-' -f 2 -s')
         VERSION_PATCH=${VERSION%-*}
         VERSION_MINOR=${VERSION_PATCH%.*}
         BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
@@ -38,17 +38,21 @@ jobs:
         echo "::set-env name=VERSION_RELEASE::$VERSION_RELEASE"
         echo "::set-env name=VERSION_PATCH::$VERSION_PATCH"
         echo "::set-env name=VERSION_MINOR::$VERSION_MINOR"
+        
+        echo "${{ github.event }}"
      - 
       name: Generate Master Tags
-      id: generate_tags
+      id: generate_tags_master
       if: github.ref == 'refs/heads/master'
       run: |
-        echo "VERSION=$VERSION"
-        echo "VERSION_RELEASE=$VERSION_RELEASE"
-        echo "VERSION_PATCH=$VERSION_PATCH"
-        echo "VERSION_MINOR=$VERSION_MINOR"
-        TAGS="$IMAGE_NAME:$VERSION\n$IMAGE_NAME:$VERSION_PATCH-$VERSION_RELEASE\n$IMAGE_NAME:latest"
-        echo $TAGS
+        TAGS="$IMAGE_NAME:$VERSION\n$IMAGE_NAME:$VERSION_MINOR\n$IMAGE_NAME:latest"
+        echo "::set-output name=TAGS::$TAGS"
+     - 
+      name: Generate Dev Tags
+      id: generate_tags_dev
+      if: github.ref == 'refs/heads/dev'
+      run: |
+        TAGS="$IMAGE_NAME:$VERSION\n$IMAGE_NAME:$VERSION_MINOR-$VERSION_RELEASE\n$IMAGE_NAME:dev-latest"
         echo "::set-output name=TAGS::$TAGS"
      - 
       name: GITHASH
@@ -68,7 +72,12 @@ jobs:
       with:
         data: ${{ steps.generate_env.outputs.VERSION }}
         variable: VERSION
-
+     - 
+      name: TAGS
+      uses: nick-invision/persist-action-data@v1
+      with:
+        data: ${{ steps.generate_env.outputs.TAGS }}
+        variable: TAGS
 
   docker:
     runs-on: ubuntu-latest
