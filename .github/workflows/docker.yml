@@ -27,6 +27,11 @@ jobs:
           VERSION_MINOR: $VERSION_MINOR
           branch: ${{ github.ref }}
           isNightly: ${{ github.event_name == 'schedule' }}
+      - 
+        name: Setup env
+        uses: jwulf/add-env-vars-action@master
+        with:
+          map: '{"VERSION": "$VERSION", "GITHASH": "${GITHASH}", "DOCKERTAGS":"${{ steps.genTags.outputs.TAGS }}"}'   
   docker:
     needs: [prepair]
     runs-on: ubuntu-latest
@@ -39,3 +44,4 @@ jobs:
       run: |
        echo ${{ github.event }}
        echo ${{ github.event_name }}
+       env
