@@ -20,7 +20,6 @@ jobs:
      -
       name: Build Images
       run: |
-       echo ${{ github.event.payload.action }}
+       echo ${{ github.event }}
+       echo ${{ github.event_name }}
        echo ${{ github.event.action }}
-       echo ${{ github.event.payload.type }}
-       echo ${{ github.event.payload.pusher }}
