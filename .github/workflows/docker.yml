@@ -16,7 +16,7 @@ jobs:
       id: generate_env
       run: |
         VERSION=$(head -n 1 ./CHANGELOG)
-        VERSION_RELEASE=$(echo $VERSION | cut -d '-' -f 2 -s | awk '{print tolower($0)})
+        VERSION_RELEASE=$(echo $VERSION | cut -d '-' -f 2 -s | awk '{print tolower($0)}')
         VERSION_PATCH=${VERSION%-*}
         VERSION_MINOR=${VERSION_PATCH%.*}
         BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
