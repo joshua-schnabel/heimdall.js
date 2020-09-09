@@ -1,9 +1,11 @@
 name: docker
 
+env:
+  IMAGE_NAME: jschnabel/heimdall
+
 on:
   push:
     branches: master
-
 jobs:
   predocker:
     runs-on: ubuntu-latest
@@ -31,8 +33,13 @@ jobs:
         echo "::set-output name=VERSION::$VERSION"
         echo "::set-output name=BUILD_DATE::$BUILD_DATE"
         echo "::set-output name=GITHASH::$GITHASH"
+        
+        echo "::set-env name=VERSION::$VERSION"
+        echo "::set-env name=VERSION_RELEASE::$VERSION_RELEASE"
+        echo "::set-env name=VERSION_PATCH::$VERSION_PATCH"
+        echo "::set-env name=VERSION_MINOR::$VERSION_MINOR"
      - 
-      name: Generate Tags
+      name: Generate Master Tags
       id: generate_tags
       if: github.ref == 'refs/heads/master'
       run: |
@@ -40,6 +47,9 @@ jobs:
         echo "VERSION_RELEASE=$VERSION_RELEASE"
         echo "VERSION_PATCH=$VERSION_PATCH"
         echo "VERSION_MINOR=$VERSION_MINOR"
+        TAGS="$IMAGE_NAME:$VERSION\n$IMAGE_NAME:$VERSION_PATCH-$VERSION_RELEASE\n$IMAGE_NAME:latest"
+        echo $TAGS
+        echo "::set-output name=TAGS::$TAGS"
      - 
       name: GITHASH
       uses: nick-invision/persist-action-data@v1
