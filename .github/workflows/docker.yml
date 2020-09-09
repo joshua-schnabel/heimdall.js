@@ -20,11 +20,12 @@ jobs:
         VERSION_PATCH=${VERSION%-*}
         VERSION_MINOR=${VERSION_PATCH%.*}
         BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+        GITHASH=$(git rev-parse "$GITHUB_SHA")
         echo "VERSION=$VERSION"
-        echo "VERSION=$VERSION"
+        echo "BUILD_DATE=$BUILD_DATE"
         echo "GITHASH=$GITHUB_SHA"
         echo "::set-output name=VERSION::$VERSION"
-        echo "::set-output name=BUILDTIME::$BUILD_DATE"
+        echo "::set-output name=BUILD_DATE::$BUILD_DATE"
         echo "::set-output name=GITHASH::$GITHASH"
      - 
       name: GITHASH
