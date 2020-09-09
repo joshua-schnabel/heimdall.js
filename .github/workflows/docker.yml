@@ -8,28 +8,43 @@ jobs:
   predocker:
     runs-on: ubuntu-latest
     steps:
-    - 
+     - 
+        name: Checkout
+        uses: actions/checkout@v2
+     - 
+      name: generate_env
+      run: |
+        VERSION=$(head -n 1 ./CHANGELOG)
+        VERSION_RELEASE=$(echo $VERSION | cut -d '-' -f 2 -s)
+        VERSION_PATCH=${VERSION%-*}
+        VERSION_MINOR=${VERSION_PATCH%.*}
+        BUILD_DATE=${date -u +"%Y-%m-%dT%H:%M:%SZ"}
+        GUTHASH=$(git rev-parse --short "$GITHUB_SHA")
+        echo "::set-output name=VERSION::$VERSION\n"
+        echo "::set-output name=BUILDTIME::$BUILD_DATE\n"
+        echo "::set-output name=GUTHASH::$GUTHASH\n"
+     - 
+      name: GUTHASH
+      uses: nick-invision/persist-action-data@v1
+      with:
+        data: ${{ steps.generate_env.output.GUTHASH }}
+        variable: GUTHASH
+     - 
       name: BUILD_DATE
       uses: nick-invision/persist-action-data@v1
       with:
-        data: ${date -u +"%Y-%m-%dT%H:%M:%SZ"}
+        data: ${{ steps.generate_env.output.BUILD_DATE }}
         variable: BUILD_DATE
-    - 
-      name: VCS_REF
-      uses: nick-invision/persist-action-data@v1
-      with:
-        data: $(git rev-parse --short "$GITHUB_SHA")
-        variable: VCS_REF
-    - 
+     - 
       name: VERSION
       uses: nick-invision/persist-action-data@v1
       with:
-        data: ${head -n 1 ./CHANGELOG}
+        data: ${{ steps.generate_env.output.VERSION }}
         variable: VERSION
   docker:
     runs-on: ubuntu-latest
     needs: predocker
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master2'
     steps:
       - 
         name: Checkout
@@ -49,26 +64,26 @@ jobs:
       - 
         uses: nick-invision/persist-action-data@v1
         with:
-          retrieve_variables: BUILD_DATE,VERSION,VCS_REF
+          retrieve_variables: BUILD_DATE,VERSION,GUTHASH
       - 
         run: |
           echo $BUILD_DATE
           echo $VERSION
-          echo $VCS_REF
+          echo $GUTHASH
       -
         name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          platforms: linux/arm/v6,linux/arm64
+          platforms: linux/arm/v6,linux/amd64
           push: true
           tags: | 
             jschnabel/heimdall.js:latest
             jschnabel/heimdall.js:dev
           build-args: |
             BUILD_DATE=$BUILD_DATE
-            VCS_REF=
-            VERSION=
+            VCS_REF=$GUTHASH
+            VERSION=$VERSION
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
