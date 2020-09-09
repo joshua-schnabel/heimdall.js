@@ -7,19 +7,32 @@ on:
   push:
     branches: master
 jobs:
+  prepair:
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        id: genVersions
+        name: Generate Versions
+        uses: ./.github/actions/genVersions
+      - 
+        id: genTags
+        name: Generate Tags
+        uses: ./.github/actions/genTags
+        with:
+          VERSION: $VERSION
+          VERSION_RELEASE: $VERSION_RELEASE
+          VERSION_MINOR: $VERSION_MINOR
+          branch: ${{ github.ref }}
+          isNightly: ${{ github.event_name == 'schedule' }}
   docker:
+    needs: [prepair]
     runs-on: ubuntu-latest
     steps:
      - 
       name: Checkout
       uses: actions/checkout@v2
-     - 
-      id: genVersions
-      name: Generate Versions
-      uses: ./.github/actions/genVersions
      -
       name: Build Images
       run: |
        echo ${{ github.event }}
        echo ${{ github.event_name }}
-       echo ${{ github.event.action }}
