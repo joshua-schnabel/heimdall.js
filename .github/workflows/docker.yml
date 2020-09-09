@@ -28,10 +28,14 @@ jobs:
           branch: ${{ github.ref }}
           isNightly: ${{ github.event_name == 'schedule' }}
       - 
-        name: Setup env
-        uses: jwulf/add-env-vars-action@master
+        name: Generate Env File
+        uses: ./.github/actions/generateEnv
         with:
-          map: '{"ABC":"abc", "VERSION": "$VERSION", "GITHASH": "${GITHASH}", "DOCKERTAGS":"${{ steps.genTags.outputs.TAGS }}"}'   
+          variables: |
+            VERSION
+            VERSION_RELEASE
+            VERSION_MINOR
+            TAGS
   docker:
     needs: [prepair]
     runs-on: ubuntu-latest
