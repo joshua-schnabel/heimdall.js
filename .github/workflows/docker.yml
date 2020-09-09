@@ -32,10 +32,10 @@ jobs:
         uses: ./.github/actions/generateEnv
         with:
           variables: |
-            VERSION
-            VERSION_RELEASE
-            VERSION_MINOR
-            TAGS
+            "VERSION"
+            "VERSION_RELEASE"
+            "VERSION_MINOR"
+            "TAGS"
   docker:
     needs: [prepair]
     runs-on: ubuntu-latest
