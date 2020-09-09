@@ -20,13 +20,12 @@ jobs:
         VERSION_PATCH=${VERSION%-*}
         VERSION_MINOR=${VERSION_PATCH%.*}
         BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-        GITHASH=$(git rev-parse --short "$GITHUB_SHA")
-        echo $VERSION
-        echo $BUILD_DATE
-        echo $GUTHASH
-        echo "::set-output name=VERSION::$VERSION\n"
-        echo "::set-output name=BUILDTIME::$BUILD_DATE\n"
-        echo "::set-output name=GITHASH::$GITHASH\n"
+        echo "VERSION=$VERSION"
+        echo "VERSION=$VERSION"
+        echo "GITHASH=$GITHUB_SHA"
+        echo "::set-output name=VERSION::$VERSION"
+        echo "::set-output name=BUILDTIME::$BUILD_DATE"
+        echo "::set-output name=GITHASH::$GITHASH"
      - 
       name: GITHASH
       uses: nick-invision/persist-action-data@v1
@@ -45,6 +44,8 @@ jobs:
       with:
         data: ${{ steps.generate_env.outputs.VERSION }}
         variable: VERSION
+
+
   docker:
     runs-on: ubuntu-latest
     needs: predocker
