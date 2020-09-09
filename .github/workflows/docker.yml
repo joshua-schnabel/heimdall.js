@@ -24,6 +24,10 @@ jobs:
         echo "VERSION=$VERSION"
         echo "BUILD_DATE=$BUILD_DATE"
         echo "GITHASH=$GITHUB_SHA"
+        echo "VERSION_RELEASE=$VERSION_RELEASE"
+        echo "VERSION_PATCH=$VERSION_PATCH"
+        echo "VERSION_MINOR=$VERSION_MINOR"
+        
         echo "::set-output name=VERSION::$VERSION"
         echo "::set-output name=BUILD_DATE::$BUILD_DATE"
         echo "::set-output name=GITHASH::$GITHASH"
