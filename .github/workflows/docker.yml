@@ -12,7 +12,8 @@ jobs:
         name: Checkout
         uses: actions/checkout@v2
      - 
-      name: generate_env
+      name: Generate ENV
+      id: generate_env
       run: |
         VERSION=$(head -n 1 ./CHANGELOG)
         VERSION_RELEASE=$(echo $VERSION | cut -d '-' -f 2 -s)
@@ -20,6 +21,9 @@ jobs:
         VERSION_MINOR=${VERSION_PATCH%.*}
         BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
         GUTHASH=$(git rev-parse --short "$GITHUB_SHA")
+        echo $VERSION
+        echo $BUILD_DATE
+        echo $GUTHASH
         echo "::set-output name=VERSION::$VERSION\n"
         echo "::set-output name=BUILDTIME::$BUILD_DATE\n"
         echo "::set-output name=GUTHASH::$GUTHASH\n"
