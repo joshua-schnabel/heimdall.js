@@ -42,6 +42,6 @@ jobs:
      -
       name: Build Images
       run: |
-       echo ${{ github.event }}
-       echo ${{ github.event_name }}
-       env
+       echo ${{ env.VERSION }}
+       echo ${{ env.GITHASH }}
+       echo ${{ env.DOCKERTAGS }}
