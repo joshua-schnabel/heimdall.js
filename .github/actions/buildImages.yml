@@ -1,16 +1,12 @@
 name: 'Build Docker Images'
 description: 'Build Docker Images for linux/arm/v6 and linux/amd64'
 inputs:
-  image-name:
-    description: 'Name of the image'
+  tags:
+    description: 'Tags of the image'
     required: true
 runs:
   using: "composite"
   steps: 
-    steps:
-      - 
-        name: Checkout
-        uses: actions/checkout@v2
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -39,9 +35,7 @@ runs:
         with:
           platforms: linux/arm/v6,linux/amd64
           push: true
-          tags: | 
-            jschnabel/heimdall.js:latest
-            jschnabel/heimdall.js:dev
+          tags: ${{ inputs.tags }}
           build-args: |
             BUILD_DATE=$BUILD_DATE
             VCS_REF=$GITHASH
