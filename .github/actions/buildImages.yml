@@ -22,7 +22,7 @@ runs:
       - 
         uses: nick-invision/persist-action-data@v1
         with:
-          retrieve_variables: BUILD_DATE,VERSION,GUTHASH
+          retrieve_variables: BUILD_DATE,VERSION,GUTHASH,TAGS
       - 
         run: |
           echo $BUILD_DATE
@@ -35,7 +35,7 @@ runs:
         with:
           platforms: linux/arm/v6,linux/amd64
           push: true
-          tags: ${{ inputs.tags }}
+          tags: $TAGS
           build-args: |
             BUILD_DATE=$BUILD_DATE
             VCS_REF=$GITHASH
