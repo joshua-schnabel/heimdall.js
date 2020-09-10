@@ -18,6 +18,5 @@ runs:
         for envname in $sentence
         do
             envvalue=$(printf '%s\n' "${!envname}");
-            echo "$envname=$envvalue\n" >> /tmp/env
+            echo "$envname=$envvalue" >> /tmp/env
         done
-        cat /tmp/env
