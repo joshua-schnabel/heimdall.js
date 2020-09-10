@@ -32,6 +32,12 @@ jobs:
         uses: ./.github/actions/generateEnv
         with:
           variables: "VERSION,VERSION_RELEASE,VERSION_MINOR,TAGS"
+      - 
+        name: Upload Env File
+        uses: actions/upload-artifact@v2
+        with:
+          name: env
+          path: /tmp/env
   docker:
     needs: [prepair]
     runs-on: ubuntu-latest
