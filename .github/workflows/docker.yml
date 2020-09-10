@@ -31,11 +31,7 @@ jobs:
         name: Generate Env File
         uses: ./.github/actions/generateEnv
         with:
-          variables: |
-            "VERSION"
-            "VERSION_RELEASE"
-            "VERSION_MINOR"
-            "TAGS"
+          variables: "VERSION,VERSION_RELEASE,VERSION_MINOR,TAGS"
   docker:
     needs: [prepair]
     runs-on: ubuntu-latest
