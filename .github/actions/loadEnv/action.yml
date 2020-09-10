@@ -1,0 +1,13 @@
+name: 'Load Env File'
+description: 'Load Env File'
+runs:
+  using: "composite"
+  steps: 
+     - 
+      name: Generate Env File
+      id: generate_file
+      shell: bash
+      run: |
+        while read -r line; do
+            echo "Line - $line"
+        done < /tmp/env
