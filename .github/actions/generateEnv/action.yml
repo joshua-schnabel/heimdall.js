@@ -11,11 +11,12 @@ runs:
       id: generate_file
       shell: bash
       run: |
+        touch /tmp/env
         t=${{ inputs.variables }}
         echo $t
         sentence=${t//,/$'\n'}  # change the semicolons to white space
         for envname in $sentence
         do
             envvalue=$(printf '%s\n' "${!envname}");
-            echo "$envname=$envvalue"
+            echo "$envname=$envvalue\n" > /tmp/env
         done
