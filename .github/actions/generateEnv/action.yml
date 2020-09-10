@@ -11,4 +11,9 @@ runs:
       id: generate_file
       shell: bash
       run: |
-        echo ${{ inputs.variables }}
+        t=${{ inputs.variables }}
+        a=($(echo "$t" | tr ',' '\n'))
+        for i in "${array[@]}"
+        do
+          echo "x=$i"
+        done
