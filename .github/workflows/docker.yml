@@ -45,6 +45,15 @@ jobs:
      - 
       name: Checkout
       uses: actions/checkout@v2
+     - 
+      name: Download Env File
+      uses: actions/download-artifact@v2
+      with:
+        name: my-artifact
+        path: path/to/artifact
+     - 
+      name: Load Env
+      uses: ./.github/actions/loadEnv
      -
       name: Build Images
       run: |
