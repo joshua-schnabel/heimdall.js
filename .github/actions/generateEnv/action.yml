@@ -12,9 +12,9 @@ runs:
       shell: bash
       run: |
         t=${{ inputs.variables }}
-        a=($(echo "$t" | tr ',' '\n'))
-        echo $a
-        for i in "$a"
+        echo $t
+        sentence=${sentence//,/$'\n'}  # change the semicolons to white space
+        for word in $sentence
         do
-          echo "x=$i"
+            echo "word=$word"
         done
