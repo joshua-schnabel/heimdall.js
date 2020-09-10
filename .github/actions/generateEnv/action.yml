@@ -13,7 +13,8 @@ runs:
       run: |
         t=${{ inputs.variables }}
         a=($(echo "$t" | tr ',' '\n'))
-        for i in "${array[@]}"
+        echo $a
+        for i in "$a"
         do
           echo "x=$i"
         done
