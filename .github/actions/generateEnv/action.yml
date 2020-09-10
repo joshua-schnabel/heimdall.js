@@ -16,6 +16,6 @@ runs:
         sentence=${t//,/$'\n'}  # change the semicolons to white space
         for envname in $sentence
         do
-            envvalue=$(printf '%s\n' "${envname}");
+            envvalue=$(printf '%s\n' "${!envname}");
             echo "$envname=$envvalue"
         done
