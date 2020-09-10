@@ -13,7 +13,7 @@ runs:
       run: |
         t=${{ inputs.variables }}
         echo $t
-        sentence=${sentence//,/$'\n'}  # change the semicolons to white space
+        sentence=${t//,/$'\n'}  # change the semicolons to white space
         for word in $sentence
         do
             echo "word=$word"
