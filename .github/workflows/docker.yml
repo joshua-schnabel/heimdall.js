@@ -25,7 +25,7 @@ jobs:
           VERSION: $VERSION
           VERSION_RELEASE: $VERSION_RELEASE
           VERSION_MINOR: $VERSION_MINOR
-          branch: ${{ github.ref }}
+          branch: $BRANCH
           isNightly: ${{ github.event_name == 'schedule' }}
       - 
         name: Generate Env File
