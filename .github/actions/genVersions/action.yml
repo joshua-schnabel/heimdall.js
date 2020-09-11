@@ -31,7 +31,7 @@ runs:
           VERSION_MINOR=${VERSION_PATCH%.*}
           BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           GITHASH=$(git rev-parse "$GITHUB_SHA")
-          BRANCH=$(echo "$GITHUB_REF" | cut -d '/' -f 1 -s)
+          BRANCH=$(echo "$GITHUB_REF" | cut -d '/' -f 3 -s)
           echo "$BRANCH"
           echo "::set-output name=VERSION::$VERSION"
           echo "::set-output name=BUILD_DATE::$BUILD_DATE"
