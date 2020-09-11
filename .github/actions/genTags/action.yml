@@ -30,14 +30,14 @@ runs:
         if [ ${{ inputs.branch }} = 'master' ] ; then
             if [ ${{ inputs.isNightly }} = true ] ; then
              echo 'Generate Nightly Tags'
-             TAGS=`echo -e "$IMAGENAME:latest-nightly\n$IMAGENAME:$VERSION-nightly\n$IMAGENAME:$VERSION_MINOR-nightly"`
+             TAGS=`echo -e "$IMAGENAME:latest-nightly $IMAGENAME:$VERSION-nightly $IMAGENAME:$VERSION_MINOR-nightly"`
             else 
               echo 'Generate Master Tags'
-              TAGS=`echo -e "$IMAGENAME:latest\n$IMAGENAME:$VERSION\n$IMAGENAME:$VERSION_MINOR"`
+              TAGS=`echo -e "$IMAGENAME:latest $IMAGENAME:$VERSION $IMAGENAME:$VERSION_MINOR"`
             fi
         elif [ ${{ inputs.branch }} = 'dev' ] ; then
-           TAGS=`echo -e "$IMAGENAME:latest-dev\n$IMAGENAME:$VERSION-dev\n$IMAGENAME:$VERSION_MINOR-dev"`
+           TAGS=`echo -e "$IMAGENAME:latest-dev $IMAGENAME:$VERSION-dev $IMAGENAME:$VERSION_MINOR-dev"`
         fi
-        echo "$TAGS"
+        echo ">>$TAGS<<"
         echo "::set-output name=TAGS::$TAGS"
         echo "::set-env name=TAGS::$TAGS"
