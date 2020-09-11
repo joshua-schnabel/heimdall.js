@@ -38,5 +38,6 @@ runs:
         elif [ ${{ inputs.branch }} = 'dev' ] ; then
            TAGS="$(echo -e '$IMAGENAME:latest-dev\n$IMAGENAME:$VERSION-dev\n$IMAGENAME:$VERSION_MINOR-dev')"
         fi
+        echo "$TAGS"
         echo "::set-output name=VERSION::$VERSION"
         echo "::set-env name=VERSION_MINOR::$VERSION_MINOR"
