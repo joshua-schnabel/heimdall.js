@@ -1,7 +1,7 @@
 name: docker
 
 env:
-  IMAGE_NAME: jschnabel/heimdall
+  IMAGE_NAME: jschnabel/heimdall.js
 
 on:
   push:
@@ -31,7 +31,7 @@ jobs:
         name: Generate Env File
         uses: ./.github/actions/generateEnv
         with:
-          variables: "VERSION,VERSION_RELEASE,VERSION_MINOR,TAGS,BRANCH,BUILD_DATE"
+          variables: "VERSION,VERSION_RELEASE,VERSION_MINOR,TAGS,BRANCH,BUILD_DATE,GITHASH"
       - 
         name: Upload Env File
         uses: actions/upload-artifact@v2
@@ -55,10 +55,26 @@ jobs:
       name: Load Env
       uses: ./.github/actions/loadEnv
      -
-      name: Build Images
-      run: |
-       echo "VERSION=${{ env.VERSION }}"
-       echo "GITHASH=${{ env.GITHASH }}"
-       echo "TAGS=${{ env.TAGS }}"
-       echo "BRANCH=${{ env.BRANCH }}"
-       echo "BUILD_DATE=${{ env.BUILD_DATE }}"
+      name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+     -
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+     -
+      name: Login to DockerHub
+      uses: docker/login-action@v1 
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+     -
+      name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        platforms: linux/amd64,linux/arm/v6
+        tags: $TAGS
+        build-args: |
+          BUILD_DATE=$BUILD_DATE
+          VCS_REF=$GITHASH
+          VERSION=$VERSION
