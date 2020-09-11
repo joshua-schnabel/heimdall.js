@@ -1,49 +1,49 @@
-name: 'Generate Versions'
-description: 'Extract Versions from changelog'
-outputs:
-  VERSION: 
-    description: "VERSION"
-    value: ${{ steps.generate_version.outputs.VERSION }}
-  BUILD_DATE: 
-    description: "BUILD_DATE"
-    value: ${{ steps.generate_version.outputs.BUILD_DATE }}
-  GITHASH: 
-    description: "GITHASH"
-    value: ${{ steps.generate_version.outputs.GITHASH }}
-  VERSION_RELEASE: 
-    description: "VERSION_RELEASE"
-    value: ${{ steps.generate_version.outputs.VERSION_RELEASE }}
-  VERSION_MINOR: 
-    description: "VERSION_MINOR"
-    value: ${{ steps.generate_version.outputs.VERSION_MINOR }}
+--- 
+description: "Extract Versions from changelog"
+name: "Generate Versions"
+outputs: 
   BRANCH: 
-    description: "BRANCH"
-    value: ${{ steps.generate_version.outputs.BRANCH }}
-runs:
-  using: "composite"
+    description: BRANCH
+    value: "${{ steps.generate_version.outputs.BRANCH }}"
+  BUILD_DATE: 
+    description: BUILD_DATE
+    value: "${{ steps.generate_version.outputs.BUILD_DATE }}"
+  GITHASH: 
+    description: GITHASH
+    value: "${{ steps.generate_version.outputs.GITHASH }}"
+  VERSION: 
+    description: VERSION
+    value: "${{ steps.generate_version.outputs.VERSION }}"
+  VERSION_MINOR: 
+    description: VERSION_MINOR
+    value: "${{ steps.generate_version.outputs.VERSION_MINOR }}"
+  VERSION_RELEASE: 
+    description: VERSION_RELEASE
+    value: "${{ steps.generate_version.outputs.VERSION_RELEASE }}"
+runs: 
   steps: 
-     - 
-      name: Generate Version
-      id: generate_version
-      shell: bash
+    - id: generate_version
+      name: "Generate Version"
       run: |
-        VERSION=$(head -n 1 ./CHANGELOG | awk '{print tolower($0)}')
-        VERSION_RELEASE=$(echo $VERSION | cut -d '-' -f 2 -s)
-        VERSION_PATCH=${VERSION%-*}
-        VERSION_MINOR=${VERSION_PATCH%.*}
-        BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-        GITHASH=$(git rev-parse "$GITHUB_SHA")
-        BRANCH=$(echo "$GITHUB_REF" | cut -d '/' -f 2 -s)
-        echo "$BRANCH"
-        echo "::set-output name=VERSION::$VERSION"
-        echo "::set-output name=BUILD_DATE::$BUILD_DATE"
-        echo "::set-output name=GITHASH::$GITHASH"
-        echo "::set-output name=VERSION_RELEASE::$VERSION_RELEASE"
-        echo "::set-output name=VERSION_MINOR::$VERSION_MINOR"
-        echo "::set-output name=BRANCH::$BRANCH"
-        echo "::set-env name=VERSION::$VERSION"
-        echo "::set-env name=BUILD_DATE::$BUILD_DATE"
-        echo "::set-env name=GITHASH::$GITHASH"
-        echo "::set-env name=VERSION_RELEASE::$VERSION_RELEASE"
-        echo "::set-env name=BRANCH::$BRANCH"
-        echo "::set-env name=VERSION_MINOR::$VERSION_MINOR"
+          VERSION=$(head -n 1 ./CHANGELOG | awk '{print tolower($0)}')
+          VERSION_RELEASE=$(echo $VERSION | cut -d '-' -f 2 -s)
+          VERSION_PATCH=${VERSION%-*}
+          VERSION_MINOR=${VERSION_PATCH%.*}
+          BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          GITHASH=$(git rev-parse "$GITHUB_SHA")
+          BRANCH=$(echo "$GITHUB_REF" | cut -d '/' -f 2 -s)
+          echo "$BRANCH"
+          echo "::set-output name=VERSION::$VERSION"
+          echo "::set-output name=BUILD_DATE::$BUILD_DATE"
+          echo "::set-output name=GITHASH::$GITHASH"
+          echo "::set-output name=VERSION_RELEASE::$VERSION_RELEASE"
+          echo "::set-output name=VERSION_MINOR::$VERSION_MINOR"
+          echo "::set-output name=BRANCH::$BRANCH"
+          echo "::set-env name=VERSION::$VERSION"
+          echo "::set-env name=BUILD_DATE::$BUILD_DATE"
+          echo "::set-env name=GITHASH::$GITHASH"
+          echo "::set-env name=VERSION_RELEASE::$VERSION_RELEASE"
+          echo "::set-env name=BRANCH::$BRANCH"
+          echo "::set-env name=VERSION_MINOR::$VERSION_MINOR"
+      shell: bash
+  using: composite
