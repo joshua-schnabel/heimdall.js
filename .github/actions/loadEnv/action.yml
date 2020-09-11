@@ -11,8 +11,8 @@ runs:
         while read -r line; do
             echo "-----------------"
             t_env=(`echo $line | tr '=' ' '`)
-            t_name=$t_env[0]
-            t_value=$t_env[1]
+            t_name=${t_env[0]}
+            t_value=${t_env[1]}
             echo "$t_name => $t_value"
             echo "::set-env name=$t_name::$t_value"
         done < /tmp/env
