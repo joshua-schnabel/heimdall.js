@@ -9,5 +9,8 @@ runs:
       shell: bash
       run: |
         while read -r line; do
-            echo "Line - $line"
+            t_envs=$(echo $line | tr "=" "\n")
+            t_name=t_envs[0]
+            t_value=t_envs[1]
+            echo "$t_name => $t_value"
         done < /tmp/env
