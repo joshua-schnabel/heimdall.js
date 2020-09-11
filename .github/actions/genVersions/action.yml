@@ -16,6 +16,9 @@ outputs:
   VERSION_MINOR: 
     description: "VERSION_MINOR"
     value: ${{ steps.generate_version.outputs.VERSION_MINOR }}
+  BRANCH: 
+    description: "BRANCH"
+    value: ${{ steps.generate_version.outputs.BRANCH }}
 runs:
   using: "composite"
   steps: 
@@ -30,15 +33,18 @@ runs:
         VERSION_MINOR=${VERSION_PATCH%.*}
         BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
         GITHASH=$(git rev-parse "$GITHUB_SHA")
+        BRANCH=$(echo {{ GITHUB_REF }} | cut -d '-' -f 2 -s)
         
         echo "::set-output name=VERSION::$VERSION"
         echo "::set-output name=BUILD_DATE::$BUILD_DATE"
         echo "::set-output name=GITHASH::$GITHASH"
         echo "::set-output name=VERSION_RELEASE::$VERSION_RELEASE"
         echo "::set-output name=VERSION_MINOR::$VERSION_MINOR"
-        
+        echo "::set-output name=BRANCH::$BRANCH"
+         
         echo "::set-env name=VERSION::$VERSION"
         echo "::set-env name=BUILD_DATE::$BUILD_DATE"
         echo "::set-env name=GITHASH::$GITHASH"
         echo "::set-env name=VERSION_RELEASE::$VERSION_RELEASE"
+        echo "::set-env name=BRANCH::$BRANCH"
         echo "::set-env name=VERSION_MINOR::$VERSION_MINOR"
