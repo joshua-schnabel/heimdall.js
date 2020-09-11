@@ -73,8 +73,8 @@ jobs:
       with:
         push: true
         platforms: linux/amd64,linux/arm/v6
-        tags: $TAGS
+        tags: ${{ env.TAGS }}
         build-args: |
-          BUILD_DATE=$BUILD_DATE
-          VCS_REF=$GITHASH
-          VERSION=$VERSION
+          BUILD_DATE=${{ env.BUILD_DATE }}
+          VCS_REF=${{ env.GITHASH }}
+          VERSION=${{ env.VERSION }}
