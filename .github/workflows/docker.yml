@@ -31,7 +31,7 @@ jobs:
         name: Generate Env File
         uses: ./.github/actions/generateEnv
         with:
-          variables: "VERSION,VERSION_RELEASE,VERSION_MINOR,TAGS"
+          variables: "VERSION,VERSION_RELEASE,VERSION_MINOR,TAGS,BRANCH,BUILD_DATE"
       - 
         name: Upload Env File
         uses: actions/upload-artifact@v2
@@ -59,5 +59,6 @@ jobs:
       run: |
        echo "VERSION=${{ env.VERSION }}"
        echo "GITHASH=${{ env.GITHASH }}"
-       echo "DOCKERTAGS=${{ env.DOCKERTAGS }}"
-       echo "ABC=${{ env.ABC }}"
+       echo "TAGS=${{ env.TAGS }}"
+       echo "BRANCH=${{ env.BRANCH }}"
+       echo "BUILD_DATE=${{ env.BUILD_DATE }}"
