@@ -1,2 +1,3 @@
-# heimdall.js
-A simple MQTT&lt;-->HTTP Gateway
+![#Heimdall.js](./docs/heimdall.svg)
+
+

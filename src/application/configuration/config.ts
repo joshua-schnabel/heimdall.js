@@ -42,9 +42,9 @@ export class Config {
     const configFilePath = path.resolve(this.pEnv.CONFIGDIR + this.pEnv.CONFIGFILE);
     const defaultConfigFilePath = path.resolve(__dirname, "config.default.yml");
 
-    this.pDefaultConfig = safeLoad(fs.readFileSync(path.resolve(defaultConfigFilePath), "utf8"), { filename: configFilePath, json: true });
+    this.pDefaultConfig = <Record<string, unknown>> safeLoad(fs.readFileSync(path.resolve(defaultConfigFilePath), "utf8"), { filename: configFilePath, json: true });
     if (fs.existsSync(configFilePath)) {
-      this.pConfig = safeLoad(fs.readFileSync(path.resolve(configFilePath), "utf8"), { filename: configFilePath, json: true });
+      this.pConfig = <Record<string, unknown>> safeLoad(fs.readFileSync(path.resolve(configFilePath), "utf8"), { filename: configFilePath, json: true });
     }
   }
 

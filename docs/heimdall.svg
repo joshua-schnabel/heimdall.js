@@ -1,0 +1,22 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <g>
+  <title>background</title>
+  <rect fill="#fff" id="canvas_background" height="602" width="802" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="'Courier New', Courier, monospace" font-size="20" id="svg_1" y="30" x="5" stroke-width="0" stroke="#000" fill="#e05f47">&#160; _   _        _                 _         _  _       _</text>
+  <text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="'Courier New', Courier, monospace" font-size="20" id="svg_2" y="50" x="5" stroke-width="0" stroke="#000" fill="#e05f47">&#160;| | | |      (_)               | |       | || |     (_)</text>
+  <text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="'Courier New', Courier, monospace" font-size="20" id="svg_3" y="70" x="5" stroke-width="0" stroke="#000" fill="#e9d16c">&#160;| |_| |  ___  _  _ __ ___    __| |  __ _ | || |      _  ___</text>
+  <text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="'Courier New', Courier, monospace" font-size="20" id="svg_4" y="90" x="5" stroke-width="0" stroke="#000" fill="#98c379">&#160;|  _  | / _ \| || '_ ` _ \  / _` | / _` || || |     | |/ __|</text>
+  <text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="'Courier New', Courier, monospace" font-size="20" id="svg_5" y="110" x="5" stroke-width="0" stroke="#000" fill="#56b6c2">&#160;| | | ||  __/| || | | | | || (_| || (_| || || | _   | |\__ \</text>
+  <text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="'Courier New', Courier, monospace" font-size="20" id="svg_6" y="130" x="5" stroke-width="0" stroke="#000" fill="#61afef">&#160;\_| |_/ \___||_||_| |_| |_| \__,_| \__,_||_||_|(_)  | ||___/</text>
+  <text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="'Courier New', Courier, monospace" font-size="20" id="svg_7" y="150" x="5" stroke-width="0" stroke="#000" fill="#b57edc">&#160;                                                   _/ |</text>
+  <text style="cursor: move;" font-weight="bold" xml:space="preserve" text-anchor="start" font-family="'Courier New', Courier, monospace" font-size="20" id="svg_8" y="170" x="5" stroke-width="0" stroke="#000" fill="#b57edc">&#160;                                                  |__/</text>
+  <text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="'Courier New', Courier, monospace" font-size="20" id="svg_9" y="168.8" x="106.5" stroke-width="0" stroke="#000" fill="#545454">MQTT to HTTP</text>
+ </g>
+</svg>
