@@ -10,7 +10,7 @@ inputs:
   branch:
     required: true
     default: true
-  isNightly:
+  isWeekly:
     required: true
     default: false
 outputs:
@@ -28,9 +28,9 @@ runs:
         TAGS=""
         IMAGENAME="$IMAGE_NAME"
         if [ ${{ inputs.branch }} = 'master' ] ; then
-            if [ ${{ inputs.isNightly }} = true ] ; then
-             echo 'Generate Nightly Tags'
-             TAGS=`echo -e "$IMAGENAME:latest-nightly,$IMAGENAME:$VERSION-nightly,$IMAGENAME:$VERSION_MINOR-nightly"`
+            if [ ${{ inputs.isWeekly }} = true ] ; then
+             echo 'Generate Weekly Tags'
+             TAGS=`echo -e "$IMAGENAME:latest-weekly,$IMAGENAME:$VERSION-weekly,$IMAGENAME:$VERSION_MINOR-weekly"`
             else 
               echo 'Generate Master Tags'
               TAGS=`echo -e "$IMAGENAME:latest,$IMAGENAME:$VERSION,$IMAGENAME:$VERSION_MINOR"`
