@@ -6,8 +6,8 @@
   "main": "/src/server.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node --no-warnings --loader ./src/myloader.mjs --experimental-top-level-await --experimental-specifier-resolution=node src/server.ts",
-    "dev-start": "cross-env CONFIGDIR=../config/ NODE_ENV=development node --no-warnings --loader ./src/myloader.mjs --experimental-top-level-await --experimental-specifier-resolution=node src/server.ts",
-    "dev": "cross-env CONFIGDIR=../config/ NODE_ENV=development nodemon --watch src --delay 1 --exec 'npm run dev-start",
+    "dev-start": "cross-env CONFIGDIR=./config/ NODE_ENV=development node --no-warnings --loader ./src/myloader.mjs --experimental-top-level-await --experimental-specifier-resolution=node src/server.ts",
+    "dev": "cross-env CONFIGDIR=./config/ NODE_ENV=development nodemon --watch src --delay 1 --exec 'npm run dev-start",
     "test": "jest --forceExit --detectOpenHandles",
     "lint": "eslint --fix --ext ts src/"
   },

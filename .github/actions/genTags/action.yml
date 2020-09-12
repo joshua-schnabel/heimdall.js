@@ -1,9 +1,7 @@
-name: 'Generate Versions'
-description: 'Extract Versions from changelog'
+name: "Generate Versions"
+description: "Extract Versions from changelog"
 inputs:
   VERSION:
-    required: true
-  VERSION_RELEASE:
     required: true
   VERSION_MINOR:
     required: true
@@ -14,14 +12,13 @@ inputs:
     required: true
     default: false
 outputs:
-  TAGS: 
+  TAGS:
     description: "TAGS"
     value: ${{ steps.generate_tags.outputs.TAGS }}
 runs:
   using: "composite"
-  steps: 
-     - 
-      name: Generate Tags
+  steps:
+    - name: Generate Tags
       id: generate_tags
       shell: bash
       run: |
