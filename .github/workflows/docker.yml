@@ -5,7 +5,9 @@ env:
 
 on:
   push:
-    branches: master
+    branches: master,dev
+  schedule:
+    - cron:  '0 4 * * SUN'
 jobs:
   prepair:
     runs-on: ubuntu-latest
@@ -26,7 +28,7 @@ jobs:
           VERSION_RELEASE: $VERSION_RELEASE
           VERSION_MINOR: $VERSION_MINOR
           branch: $BRANCH
-          isNightly: ${{ github.event_name == 'schedule' }}
+          isWeekly: ${{ github.event_name == 'schedule' }}
       - 
         name: Generate Env File
         uses: ./.github/actions/generateEnv
