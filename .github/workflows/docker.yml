@@ -86,3 +86,22 @@ jobs:
             BUILD_DATE=${{ env.BUILD_DATE }}
             VCS_REF=${{ env.GITHASH }}
             VERSION=${{ env.VERSION }}
+  github:
+    needs: [docker]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download Env File
+        uses: actions/download-artifact@v2
+        with:
+          name: env
+          path: /tmp
+      - name: Load Env
+        uses: ./.github/actions/loadEnv
+      - name: Tag Version
+        run: |
+          git tag -a "v$VERSION $GITHASH" -m "New release for v$VERSION"
+          //git push --tags
+          git tag -n

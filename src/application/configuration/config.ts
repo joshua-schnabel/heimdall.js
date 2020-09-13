@@ -50,7 +50,7 @@ export class Config {
 
   private loadEnviroment (): void {
     this.pEnv = envalid.cleanEnv(process.env, {
-      "server.port": envalid.port({ default: undefined }),
+      "server.port": envalid.port({ default: 3000 }),
       "mqtt.adress": envalid.url({ default: undefined }),
       "mqtt.user": envalid.str({ default: undefined }),
       "mqtt.password": envalid.str({ default: undefined }),
