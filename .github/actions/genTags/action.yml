@@ -11,6 +11,8 @@ inputs:
   isWeekly:
     required: true
     default: false
+  vendorVersion:
+      required: false
 outputs:
   TAGS:
     description: "TAGS"
@@ -31,6 +33,9 @@ runs:
             else 
               echo 'Generate Master Tags'
               TAGS=`echo -e "$IMAGENAME:latest,$IMAGENAME:$VERSION,$IMAGENAME:$VERSION_MINOR"`
+            fi
+            if [ ! -z "${{ inputs.vendorVersion }}" ] ; then
+              TAGS="$TAGS,$IMAGENAME:${{ inputs.vendorVersion }}"
             fi
         elif [ ${{ inputs.branch }} = 'dev' ] ; then
            TAGS=`echo -e "$IMAGENAME:latest-dev,$IMAGENAME:$VERSION-dev,$IMAGENAME:$VERSION_MINOR-dev"`
