@@ -29,7 +29,7 @@ RUN set -x ; \
 
 RUN mkdir /app && mkdir /app/config && mkdir /app/src && chown -R www-data /app
 
-COPY ./src/ /app/src/
+COPY ./src /app/
 
 WORKDIR /app/src/
 USER www-data
