@@ -29,10 +29,12 @@ RUN set -x ; \
 
 RUN mkdir /app && mkdir /app/config && mkdir /app/src && chown -R www-data /app
 
-COPY ./src /app/
+COPY ./src /app/src/
 
 WORKDIR /app/src/
 USER www-data
+
+RUN ls
 
 RUN npm install
 
