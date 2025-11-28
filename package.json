@@ -14,11 +14,11 @@
   "author": "Joshua Schnabel",
   "license": "ISC",
   "dependencies": {
-    "@mreal/digest-auth": "^1.1.3",
+    "@mreal/digest-auth": "^2.0.0",
     "async-mqtt": "^2.6.1",
     "body-parser": "^1.19.0",
     "class-transformer": "^0.2.3",
-    "class-validator": "^0.12.2",
+    "class-validator": "^0.13.0",
     "cli-color": "^2.0.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
